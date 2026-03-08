@@ -53,43 +53,55 @@ function App() {
     }));
     const worksheet = XLSX.utils.json_to_sheet(exportData);
     const workbook = XLSX.utils.book_new();
-    
+
     XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
     XLSX.writeFile(workbook, "students.xlsx");
   }
 
   return (
-    <div className="container mt-4">
-        
-      <h3 className="text-center mb-4">Student Management System</h3>
+  <div className="app-bg">
+    <div className="container py-5">
+
+      <h2 className="text-center mb-5 fw-bold title">
+        🎓 Student Management System
+      </h2>
 
       {loading ? (
         <div className="text-center mt-5">
-          <h5>Loading students...</h5>
-          </div>
+          <div className="spinner-border text-primary"></div>
+          <p className="mt-3">Loading students...</p>
+        </div>
       ) : (
-        <>       
-          <StudentForm
-            addStudent={addStudent}
-            selectedStudent={selectedStudent}              updateStudent={updateStudent}
-          />
+        <>
+          <div className="card shadow-lg p-4 mb-4 form-card">
+            <StudentForm
+              addStudent={addStudent}
+              selectedStudent={selectedStudent}
+              updateStudent={updateStudent}
+            />
+          </div>
 
-          <button
-            className="btn btn-success mb-3"
-            onClick={downloadExcel}
-          >
-            Download Excel
-          </button>
+          <div className="d-flex justify-content-end mb-3">
+            <button
+              className="btn btn-success download-btn"
+              onClick={downloadExcel}
+            >
+              ⬇ Download Excel
+            </button>
+          </div>
 
-          <StudentTable
-            students={students}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+          <div className="card shadow-lg p-3">
+            <StudentTable
+              students={students}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          </div>
         </>
       )}
     </div>
-  );
+  </div>
+);
 }
 
 export default App;
